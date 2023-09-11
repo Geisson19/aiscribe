@@ -5,7 +5,7 @@ import axios from "axios";
 export const activatePanel = (context: vscode.ExtensionContext) => {
   const panel = vscode.window.createWebviewPanel(
     "chatPanel",
-    "Chat Panel",
+    "Doc Panel",
     vscode.ViewColumn.One,
     {
       enableScripts: true,
@@ -16,6 +16,11 @@ export const activatePanel = (context: vscode.ExtensionContext) => {
   );
 
   panel.webview.html = getWebviewContent(context);
+
+  panel.iconPath = {
+    light: vscode.Uri.file(context.asAbsolutePath("media/icon.svg")),
+    dark: vscode.Uri.file(context.asAbsolutePath("media/icon.svg")),
+  };
 
   panel.webview.onDidReceiveMessage((message) => {
     switch (message.command) {

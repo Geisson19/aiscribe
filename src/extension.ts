@@ -15,18 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
     )
   );
 
-  const panel = vscode.window.createWebviewPanel(
-    "chatPanel",
-    "Chat Panel",
-    vscode.ViewColumn.One,
-    {}
-  );
-
-  panel.iconPath = {
-    light: vscode.Uri.file(context.asAbsolutePath("media/icon.svg")),
-    dark: vscode.Uri.file(context.asAbsolutePath("media/icon.svg")),
-  };
-
   const panelCommand = vscode.commands.registerCommand(ACTIVATE_COMMAND, () => {
     activatePanel(context);
   });
