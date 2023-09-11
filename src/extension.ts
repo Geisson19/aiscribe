@@ -1,22 +1,20 @@
 import * as vscode from "vscode";
-import { SideBarProvider } from './SideBarProvider';
+import { SideBarProvider } from "./SideBarProvider";
 
 import { ACTIVATE_COMMAND } from "./extension/commands";
 import { activatePanel } from "./extension/panel";
 
 export function activate(context: vscode.ExtensionContext) {
-
   //Register Sidebar Panel
   const sideBarProvider = new SideBarProvider(context.extensionUri);
+
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider("aiscribe-sidebar", sideBarProvider)
+    vscode.window.registerWebviewViewProvider(
+      "aiscribe-sidebar",
+      sideBarProvider
+    )
   );
 
-  // Register a custom command
-	// context.subscriptions.push(vscode.commands.registerCommand('myextension.commandname', () => {
-	// 	// code here...
-	// }));
-  
   const panel = vscode.window.createWebviewPanel(
     "chatPanel",
     "Chat Panel",
