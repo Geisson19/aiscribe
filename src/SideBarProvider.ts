@@ -53,10 +53,10 @@ export class SideBarProvider implements vscode.WebviewViewProvider {
       vscode.Uri.joinPath(this._extensionUri, "media", "vscode.css")
     );
     const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "out", "compiled/sidebar.js")
+      vscode.Uri.joinPath(this._extensionUri, "out", "compiled/Chat.js")
     );
     const styleMainUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "out", "compiled/sidebar.css")
+      vscode.Uri.joinPath(this._extensionUri, "out", "compiled/Chat.css")
     );
 
     // Use a nonce to whitelist which scripts can be run
@@ -71,13 +71,17 @@ export class SideBarProvider implements vscode.WebviewViewProvider {
 				<link href="${styleResetUri}" rel="stylesheet">
 				<link href="${styleVSCodeUri}" rel="stylesheet">
         <link href="${styleMainUri}" rel="stylesheet">
-        <script nonce="${nonce}">
+        <script nonce="${nonce}" src="${scriptUri}">
             const tsvscode = acquireVsCodeApi();
         </script>
-			</head> 
-          <body>
-            <script nonce="${nonce}" src="${scriptUri}"></script>
-          </body>
+			</head>
+        <body>
+        <h1>Chat</h1>
+        <div class="chat">
+          <input type="text" placeholder="code"></input>
+          <button>Preguntar</button>
+        </div>
+        </body>
 			</html>`;
   }
 }
