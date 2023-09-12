@@ -20,6 +20,28 @@ export function activatePanel(context: vscode.ExtensionContext) {
 
   panel.webview.onDidReceiveMessage((message) => {
     switch (message.command) {
+      case "createDoc": {
+        const fileName = message.text;
+        const filePath = path.join(
+          vscode.workspace.workspaceFolders?.[0].uri.path || "",
+          "docs",
+          `${fileName}.md`
+        );
+
+        fs.writeFileSync(filePath, "");
+
+        vscode.workspace
+          .openTextDocument(filePath)
+          .then(
+            (doc) => vscode.window.showTextDocument(doc, { preview: false })
+          )
+          .then((editor) => {
+            editor.edit((editBuilder) => {
+              editBuilder.insert(new vscode.Position(0, 0), "# Titulo");
+            });
+          });
+        break;
+      }
       case "greet":
         panel.webview.postMessage({ text: "Hello, world!" });
         break;

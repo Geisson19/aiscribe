@@ -35,15 +35,15 @@
     "commands": [
       {
         "command": "aiscribe.createDoc",
-        "title": "AIScribe: Create documentation (TODO)"
+        "title": "AIScribe: Create doc file"
       },
       {
         "command": "aiscribe.activate",
         "title": "AIScribe: Activate (TODO)"
       },
       {
-        "command": "aiscribe.makePrompt",
-        "title": "AIScribe: Make prompt (TODO)"
+        "command": "aiscribe.createContent",
+        "title": "AIScribe: (prompt)"
       },
       {
         "command": "aiscribe.translateToStakeholder",
