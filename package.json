@@ -39,7 +39,7 @@
       },
       {
         "command": "aiscribe.activate",
-        "title": "AIScribe: Activate (TODO)"
+        "title": "AIScribe: Activate"
       },
       {
         "command": "aiscribe.createContent",

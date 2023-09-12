@@ -2,8 +2,7 @@ import * as vscode from "vscode";
 import { SideBarProvider } from "./SideBarProvider";
 
 import { ACTIVATE_COMMAND, CREATE_DOC_COMMAND } from "./extension/commands";
-import { createDoc } from "./extension/functions";
-import { activatePanel } from "./extension/panel";
+import { createDoc, activateExtension } from "./extension/functions";
 
 export function activate(context: vscode.ExtensionContext) {
   //Register Sidebar Panel
@@ -15,21 +14,12 @@ export function activate(context: vscode.ExtensionContext) {
     )
   );
 
-  // const panel = vscode.window.createWebviewPanel(
-  //   "chatPanel",
-  //   "Chat Panel",
-  //   vscode.ViewColumn.One,
-  //   {}
-  // );
-
-  // panel.iconPath = {
-  //   light: vscode.Uri.file(context.asAbsolutePath("media/icon.svg")),
-  //   dark: vscode.Uri.file(context.asAbsolutePath("media/icon.svg")),
-  // };
-
-  const panelCommand = vscode.commands.registerCommand(ACTIVATE_COMMAND, () => {
-    activatePanel(context);
-  });
+  const panel = vscode.window.createWebviewPanel(
+    "chatPanel",
+    "Ai Scribe panel",
+    vscode.ViewColumn.One,
+    {}
+  );
 
   const createDocCommand = vscode.commands.registerCommand(
     CREATE_DOC_COMMAND,
@@ -37,15 +27,44 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window
         .showInputBox({ prompt: "Enter the file name" })
         .then((fileName) => {
-          createDoc(fileName ?? "newDoc");
+          createDoc(fileName ?? "newDoc", panel);
         });
     }
   );
 
-  context.subscriptions.push(panelCommand);
+  const activateCommand = vscode.commands.registerCommand(
+    ACTIVATE_COMMAND,
+    activateExtension
+  );
+
   context.subscriptions.push(createDocCommand);
+  context.subscriptions.push(activateCommand);
 }
 
 export function deactivate() {
   console.log("deactivated");
+}
+
+function getWebviewContent(content: string) {
+  return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AiScribe</title>
+    </head>
+    <body>
+        <textarea id="editor">${content}</textarea>
+        <script>
+            const vscode = acquireVsCodeApi();
+            const editor = document.getElementById("editor");
+            editor.addEventListener("input", () => {
+                vscode.postMessage({
+                    command: "updateContent",
+                    content: editor.value
+                });
+            });
+        </script>
+    </body>
+    </html>`;
 }
