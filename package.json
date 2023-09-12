@@ -42,8 +42,8 @@
         "title": "AIScribe: Activate"
       },
       {
-        "command": "aiscribe.createContent",
-        "title": "AIScribe: (prompt)"
+        "command": "aiscribe.runCommands",
+        "title": "AIScribe: Run aiscribe commands"
       },
       {
         "command": "aiscribe.translateToStakeholder",

@@ -1,8 +1,16 @@
 import * as vscode from "vscode";
 import { SideBarProvider } from "./SideBarProvider";
 
-import { ACTIVATE_COMMAND, CREATE_DOC_COMMAND } from "./extension/commands";
-import { createDoc, activateExtension } from "./extension/functions";
+import {
+  ACTIVATE_COMMAND,
+  CREATE_DOC_COMMAND,
+  RUN_COMMANDS,
+} from "./extension/commands";
+import {
+  createDoc,
+  activateExtension,
+  runCommandsActive,
+} from "./extension/functions";
 
 export function activate(context: vscode.ExtensionContext) {
   //Register Sidebar Panel
@@ -14,20 +22,13 @@ export function activate(context: vscode.ExtensionContext) {
     )
   );
 
-  const panel = vscode.window.createWebviewPanel(
-    "chatPanel",
-    "Ai Scribe panel",
-    vscode.ViewColumn.One,
-    {}
-  );
-
   const createDocCommand = vscode.commands.registerCommand(
     CREATE_DOC_COMMAND,
     () => {
       vscode.window
         .showInputBox({ prompt: "Enter the file name" })
         .then((fileName) => {
-          createDoc(fileName ?? "newDoc", panel);
+          createDoc(fileName ?? "newDoc");
         });
     }
   );
@@ -37,34 +38,15 @@ export function activate(context: vscode.ExtensionContext) {
     activateExtension
   );
 
+  const runCommands = vscode.commands.registerCommand(RUN_COMMANDS, () => {
+    runCommandsActive();
+  });
+
   context.subscriptions.push(createDocCommand);
   context.subscriptions.push(activateCommand);
+  context.subscriptions.push(runCommands);
 }
 
 export function deactivate() {
   console.log("deactivated");
-}
-
-function getWebviewContent(content: string) {
-  return `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AiScribe</title>
-    </head>
-    <body>
-        <textarea id="editor">${content}</textarea>
-        <script>
-            const vscode = acquireVsCodeApi();
-            const editor = document.getElementById("editor");
-            editor.addEventListener("input", () => {
-                vscode.postMessage({
-                    command: "updateContent",
-                    content: editor.value
-                });
-            });
-        </script>
-    </body>
-    </html>`;
 }
