@@ -9,14 +9,14 @@ export const runCommandsActive = async () => {
     return;
   }
 
-  // Get the current document's text
   const document = editor.document;
   const text = document.getText();
   console.log(text);
 
-  // Scan for all /prompt commands
-  const regex = /\/prompt\s{(.*)}/g;
-  const matches = text.matchAll(regex);
+  // Modify the regular expression to match "/prompt" followed by double-quoted text
+  const regex = /\/prompt\s*{([^"]*)}/g;
+  const matches = [...text.matchAll(regex)];
+  console.log(matches);
 
   // For each /prompt command
   for (const match of matches) {
