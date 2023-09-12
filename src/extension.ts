@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
 import { SideBarProvider } from "./SideBarProvider";
 
-import { ACTIVATE_COMMAND, CREATE_DOC_COMMAND } from "./extension/commands";
-import { createDoc, activateExtension } from "./extension/functions";
+import { ACTIVATE_COMMAND, CODE_SNIPPET_COMMAND, CREATE_DOC_COMMAND } from "./extension/commands";
+import { createDoc, activateExtension, codeSnippet } from "./extension/functions";
 
 export function activate(context: vscode.ExtensionContext) {
   //Register Sidebar Panel
@@ -32,6 +32,11 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  let codeSnippetCommand = vscode.commands.registerCommand(
+    CODE_SNIPPET_COMMAND, 
+    codeSnippet
+  );
+
   const activateCommand = vscode.commands.registerCommand(
     ACTIVATE_COMMAND,
     activateExtension
@@ -39,6 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(createDocCommand);
   context.subscriptions.push(activateCommand);
+  context.subscriptions.push(codeSnippetCommand);
 }
 
 export function deactivate() {

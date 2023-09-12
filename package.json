@@ -42,6 +42,10 @@
         "title": "AIScribe: Activate"
       },
       {
+        "command": "aiscribe.codeSnippet",
+        "title": "AIScribe: Code Snippet"
+      },
+      {
         "command": "aiscribe.createContent",
         "title": "AIScribe: (prompt)"
       },
