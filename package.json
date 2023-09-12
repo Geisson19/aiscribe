@@ -46,16 +46,8 @@
         "title": "AIScribe: Code Snippet"
       },
       {
-        "command": "aiscribe.createContent",
-        "title": "AIScribe: (prompt)"
-      },
-      {
-        "command": "aiscribe.translateToStakeholder",
-        "title": "AIScribe: Translate (TODO)"
-      },
-      {
-        "command": "aiscribe.summarizeSelectedText",
-        "title": "AIScribe: Summarize (TODO)"
+        "command": "aiscribe.runCommands",
+        "title": "AIScribe: Run aiscribe commands"
       }
     ]
   },
