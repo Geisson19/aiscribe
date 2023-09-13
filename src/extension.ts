@@ -4,14 +4,14 @@ import { SideBarProvider } from "./SideBarProvider";
 import {
   ACTIVATE_COMMAND,
   CREATE_DOC_COMMAND,
-  CODE_SNIPPET_COMMAND
+  CODE_SNIPPET_COMMAND,
   RUN_COMMANDS,
 } from "./extension/commands";
 import {
   createDoc,
   activateExtension,
   runCommandsActive,
-  codeSnippet
+  codeSnippet,
 } from "./extension/functions";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -36,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   let codeSnippetCommand = vscode.commands.registerCommand(
-    CODE_SNIPPET_COMMAND, 
+    CODE_SNIPPET_COMMAND,
     codeSnippet
   );
 
